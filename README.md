@@ -60,12 +60,17 @@ Run the evaluation script with the appropriate configuration file:
 python evaluate_calvin.py --running_config=cfg/cfg.yaml
 ```
 
-## Checkpoints
+### Checkpoints
 
 - GCBC checkpoint: [Link](https://huggingface.co/ShuaKang/taksie/tree/main/gcbc_checkpoint)
 - LIV fine-tuned checkpoint: [Link](https://huggingface.co/ShuaKang/taksie/tree/main/liv_resnet50_CALVIN)
 - ControlNet: [Link](https://huggingface.co/ShuaKang/TaKSIE_controlnet)
 - Unet: [Link](https://huggingface.co/ShuaKang/TaKSIE_unet)
+
+## Training
+
+Coming soon...
+
 ## Bibtex
 
 ```bibtex
