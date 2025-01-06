@@ -160,6 +160,9 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+log_evaluate_lh_policy
+gcbc_checkpoint
+
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore

@@ -1,0 +1,47 @@
+# rotation
+rotate_red_block_right: ["take the red block and rotate it to the left"]
+rotate_red_block_left: ["take the red block and rotate it to the right"]
+rotate_blue_block_right: ["take the blue block and rotate it to the left"]
+rotate_blue_block_left: ["take the blue block and rotate it to the right"]
+rotate_pink_block_right: ["take the pink block and rotate it to the left"]
+rotate_pink_block_left: ["take the pink block and rotate it to the right"]
+
+# sliding
+push_red_block_right: ["go push the red block left"]
+push_red_block_left: ["go push the red block right"]
+push_blue_block_right: ["go push the blue block left"]
+push_blue_block_left: ["go push the blue block right"]
+push_pink_block_right: ["go push the pink block left"]
+push_pink_block_left: ["go push the pink block right"]
+
+# open/close
+move_slider_left: [ "push the sliding door to the right side"]
+move_slider_right: [ "push the sliding door to the left side"]
+open_drawer: ["push the handle to close the drawer"]
+close_drawer: ["pull the handle to open the drawer"]
+
+# lifting
+lift_red_block_table: [""]
+lift_blue_block_table: [""]
+lift_pink_block_table: [""]
+
+lift_red_block_slider: [ ""]
+lift_blue_block_slider: [ ""]
+lift_pink_block_slider: [ ""]
+
+lift_red_block_drawer: [""]
+lift_blue_block_drawer: [""]
+lift_pink_block_drawer: [""]
+
+place_in_slider: [ ""]
+place_in_drawer: [ ""]
+
+push_into_drawer: [""]
+
+stack_block: ["remove the stacked block"]
+unstack_block: ["stack the grasped block"]
+
+turn_on_lightbulb: ["use the switch to turn off the light bulb"]
+turn_off_lightbulb: ["use the switch to turn on the light bulb"]
+turn_on_led: ["press the button to turn off the led light"]
+turn_off_led: ["press the button to turn on the led light"]

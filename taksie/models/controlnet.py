@@ -86,7 +86,7 @@ class ControlNetConditioningEmbedding(nn.Module):
         return embedding
 
 
-class ControlNetModelLstm(ModelMixin, ConfigMixin):
+class ControlNetModelTakSIE(ModelMixin, ConfigMixin):
     _supports_gradient_checkpointing = True
 
     @register_to_config

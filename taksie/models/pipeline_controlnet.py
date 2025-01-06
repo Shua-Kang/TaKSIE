@@ -26,7 +26,7 @@ from transformers import CLIPImageProcessor, CLIPTextModel, CLIPTokenizer
 
 from diffusers.image_processor import VaeImageProcessor
 from diffusers.loaders import TextualInversionLoaderMixin
-from controlnet import ControlNetModelLstm
+from .controlnet import ControlNetModelTakSIE
 from diffusers.models import AutoencoderKL, UNet2DConditionModel
 from diffusers.schedulers import KarrasDiffusionSchedulers
 from diffusers.utils import (
@@ -93,7 +93,7 @@ EXAMPLE_DOC_STRING = """
 """
 
 
-class StableDiffusionControlNetPipelineLstm(DiffusionPipeline, TextualInversionLoaderMixin):
+class StableDiffusionControlNetPipelineTakSIE(DiffusionPipeline, TextualInversionLoaderMixin):
     r"""
     Pipeline for text-to-image generation using Stable Diffusion with ControlNet guidance.
 
@@ -135,7 +135,7 @@ class StableDiffusionControlNetPipelineLstm(DiffusionPipeline, TextualInversionL
         text_encoder: CLIPTextModel,
         tokenizer: CLIPTokenizer,
         unet: UNet2DConditionModel,
-        controlnet: Union[ControlNetModelLstm, List[ControlNetModelLstm], Tuple[ControlNetModelLstm], MultiControlNetModel],
+        controlnet: Union[ControlNetModelTakSIE, List[ControlNetModelTakSIE], Tuple[ControlNetModelTakSIE], MultiControlNetModel],
         scheduler: KarrasDiffusionSchedulers,
         safety_checker: StableDiffusionSafetyChecker,
         feature_extractor: CLIPImageProcessor,
@@ -539,9 +539,9 @@ class StableDiffusionControlNetPipelineLstm(DiffusionPipeline, TextualInversionL
         )
         # print(self.controlnet)
         if (
-            isinstance(self.controlnet, ControlNetModelLstm)
+            isinstance(self.controlnet, ControlNetModelTakSIE)
             or is_compiled
-            and isinstance(self.controlnet._orig_mod, ControlNetModelLstm)
+            and isinstance(self.controlnet._orig_mod, ControlNetModelTakSIE)
         ):
             self.check_image(image, prompt, prompt_embeds)
         elif (
@@ -568,9 +568,9 @@ class StableDiffusionControlNetPipelineLstm(DiffusionPipeline, TextualInversionL
 
         # Check `controlnet_conditioning_scale`
         if (
-            isinstance(self.controlnet, ControlNetModelLstm)
+            isinstance(self.controlnet, ControlNetModelTakSIE)
             or is_compiled
-            and isinstance(self.controlnet._orig_mod, ControlNetModelLstm)
+            and isinstance(self.controlnet._orig_mod, ControlNetModelTakSIE)
         ):
             if not isinstance(controlnet_conditioning_scale, float):
                 raise TypeError("For single controlnet: `controlnet_conditioning_scale` must be type `float`.")
@@ -726,7 +726,7 @@ class StableDiffusionControlNetPipelineLstm(DiffusionPipeline, TextualInversionL
         safe_serialization: bool = False,
         variant: Optional[str] = None,
     ):
-        if isinstance(self.controlnet, ControlNetModelLstm):
+        if isinstance(self.controlnet, ControlNetModelTakSIE):
             super().save_pretrained(save_directory, safe_serialization, variant)
         else:
             raise NotImplementedError("Currently, the `save_pretrained()` is not implemented for Multi-ControlNet.")
@@ -881,7 +881,7 @@ class StableDiffusionControlNetPipelineLstm(DiffusionPipeline, TextualInversionL
 
         global_pool_conditions = (
             controlnet.config.global_pool_conditions
-            if isinstance(controlnet, ControlNetModelLstm)
+            if isinstance(controlnet, ControlNetModelTakSIE)
             else controlnet.nets[0].config.global_pool_conditions
         )
         guess_mode = guess_mode or global_pool_conditions
@@ -898,7 +898,7 @@ class StableDiffusionControlNetPipelineLstm(DiffusionPipeline, TextualInversionL
         )
 
         # 4. Prepare image
-        if isinstance(controlnet, ControlNetModelLstm):
+        if isinstance(controlnet, ControlNetModelTakSIE):
             image = self.prepare_image(
                 image=image,
                 width=width,

@@ -1,5 +1,5 @@
-from pipeline_controlnet import StableDiffusionControlNetPipelineLstm
-from controlnet import ControlNetModelLstm
+from taksie.models.pipeline_controlnet import StableDiffusionControlNetPipelineTakSIE
+from taksie.models.controlnet import ControlNetModelTakSIE
 from diffusers import UniPCMultistepScheduler
 from diffusers.utils import load_image
 import torch
@@ -14,12 +14,12 @@ base_model_path = "ShuaKang/TaKSIE_unet"
 controlnet_path = "ShuaKang/TaKSIE_controlnet"
 
 # Load the ControlNet model
-controlnet = ControlNetModelLstm.from_pretrained(
+controlnet = ControlNetModelTakSIE.from_pretrained(
     controlnet_path, torch_dtype=torch.float32
 ).to(device)
 
 # Load the pipeline with the ControlNet
-pipe = StableDiffusionControlNetPipelineLstm.from_pretrained(
+pipe = StableDiffusionControlNetPipelineTakSIE.from_pretrained(
     base_model_path, controlnet=controlnet, torch_dtype=torch.float32
 ).to(device)
 controlnet.eval()
