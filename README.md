@@ -103,15 +103,15 @@ check wandb for training logs.
 ## Bibtex
 
 ```bibtex
-@misc{kang2024incorporatingtaskprogressknowledge,
-      title={Incorporating Task Progress Knowledge for Subgoal Generation in Robotic Manipulation through Image Edits}, 
-      author={Xuhui Kang and Yen-Ling Kuo},
-      year={2024},
-      eprint={2410.11013},
-      archivePrefix={arXiv},
-      primaryClass={cs.RO},
-      url={https://arxiv.org/abs/2410.11013}, 
-}
+@INPROCEEDINGS{10943942,
+  author={Kang, Xuhui and Kuo, Yen-Ling},
+  booktitle={2025 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)}, 
+  title={Incorporating Task Progress Knowledge for Subgoal Generation in Robotic Manipulation through Image Edits}, 
+  year={2025},
+  volume={},
+  number={},
+  pages={7490-7499},
+  doi={10.1109/WACV61041.2025.00728}}
 ```
 
 ## Acknowledgements
