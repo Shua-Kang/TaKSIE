@@ -67,9 +67,38 @@ python evaluate_calvin.py --running_config=cfg/cfg.yaml
 - ControlNet: [Link](https://huggingface.co/ShuaKang/TaKSIE_controlnet)
 - Unet: [Link](https://huggingface.co/ShuaKang/TaKSIE_unet)
 
-## Training
+## Training with an Example Trajectory
 
-Coming soon...
+Use the sample in `example/example_trajectory`. Choose one CALVIN trajectory. Replace with CALVIN task D to train on the whole data.
+
+### Step 1: Cache CLIP and R3M Features
+```bash
+mkdir -p cache_features/clip
+mkdir cache_features/r3m
+python scripts/generate_clip_feature.py --dataset_path example/example_trajectory --output_dir_path cache_features/clip
+python scripts/generate_r3m_feature.py --dataset_path example/example_trajectory --output_dir_path cache_features/r3m
+```
+
+### Select Ground-Truth Subgoals
+```bash
+python scripts/select_keyframe.py --r3m_feature_dir cache_features/r3m --lang_annotations_path example/example_trajectory/lang_annotations/auto_lang_ann.npy --data_path example/example_trajectory --output_dir .
+```
+Saved to output_dir/selected_keyframes.npy
+
+### Generate Subgoal Segments Used for Training Dataloading
+
+```bash
+python scripts/generate_keyframe_segment.py --input_npy_path selected_keyframes.npy --output_npy_path keyframe_segment.npy
+```
+
+### Strat training
+Use accelerate for multi-GPU training. Adjust `batch_size` and `gradient_accumulation_steps` based on GPU memory.
+I set `validation_step`=100 to monitor training, use a larger value for faster runs.
+```bash
+bash train_taksie.bash
+```
+
+check wandb for training logs.
 
 ## Bibtex
 

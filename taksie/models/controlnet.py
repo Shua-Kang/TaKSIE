@@ -123,14 +123,11 @@ class ControlNetModelTakSIE(ModelMixin, ConfigMixin):
         lstm_features = 768,
         lstm_layers = 2,
         class_embeddings_concat = False,
-        if_lstm = True
+        if_rnn = True
     ):
-        # lstm_features = 1024
-        lstm_features = 768
-        if_lstm = True
-        if_lstm = if_lstm
+        lstm_features = lstm_features
         class_embed_type = "timestep"
-        self.if_lstm = if_lstm
+        self.if_rnn = if_rnn
         self.output_or_hidden = "hidden" # "output" or "hidden"
         print(f"IF CLASS_EMBEDDINGS_CONCAT : {class_embeddings_concat}")
         super().__init__()
@@ -181,7 +178,7 @@ class ControlNetModelTakSIE(ModelMixin, ConfigMixin):
         # class embedding
         if class_embed_type is None and num_class_embeds is not None:
             self.class_embedding = nn.Embedding(num_class_embeds, time_embed_dim)
-        elif class_embed_type == "timestep" and self.if_lstm:
+        elif class_embed_type == "timestep" and self.if_rnn:
             self.lstm_features = lstm_features
             self.lstm_layers = lstm_layers
             self.class_lstm = nn.GRU(lstm_features,lstm_features,lstm_layers)
@@ -301,7 +298,7 @@ class ControlNetModelTakSIE(ModelMixin, ConfigMixin):
         conditioning_embedding_out_channels: Optional[Tuple[int]] = (16, 32, 96, 256),
         load_weights_from_unet: bool = True,
         class_embdding_type = "timestep",
-        if_lstm = None,
+        if_rnn = None,
         lstm_features = -1,
     ):
         r"""
@@ -335,7 +332,7 @@ class ControlNetModelTakSIE(ModelMixin, ConfigMixin):
             projection_class_embeddings_input_dim=unet.config.projection_class_embeddings_input_dim,
             controlnet_conditioning_channel_order=controlnet_conditioning_channel_order,
             conditioning_embedding_out_channels=conditioning_embedding_out_channels,
-            if_lstm = if_lstm,
+            if_rnn = if_rnn,
             lstm_features = lstm_features
         )
 
@@ -547,7 +544,7 @@ class ControlNetModelTakSIE(ModelMixin, ConfigMixin):
 
         emb = self.time_embedding(t_emb, timestep_cond)
 
-        if self.class_embedding is not None and self.if_lstm:
+        if self.class_embedding is not None and self.if_rnn:
             # print("contronnet LSTM")
             if class_labels is None:
                 raise ValueError("class_labels should be provided when num_class_embeds > 0")
@@ -561,10 +558,9 @@ class ControlNetModelTakSIE(ModelMixin, ConfigMixin):
                 for cl in class_labels:
                     output, self.h = self.class_lstm(cl.to(sample.device), self.h)
             else:
-                # print(class_labels.shape)
-                # print()
                 class_labels = class_labels.to(torch.float32)
                 output, self.h = self.class_lstm(class_labels.to(sample.device), self.h)
+
                 # print(output.shape)
             if(self.output_or_hidden == "output"):
                 out_features = output[-1]
