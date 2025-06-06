@@ -91,7 +91,8 @@ Saved to output_dir/selected_keyframes.npy
 python scripts/generate_keyframe_segment.py --input_npy_path selected_keyframes.npy --output_npy_path keyframe_segment.npy
 ```
 
-### Strat training
+### Start training
+
 Use accelerate for multi-GPU training. Adjust `batch_size` and `gradient_accumulation_steps` based on GPU memory.
 I set `validation_step`=100 to monitor training, use a larger value for faster runs.
 ```bash
@@ -99,6 +100,10 @@ bash train_taksie.bash
 ```
 
 check wandb for training logs.
+
+**Note on Training ControlNet**: 
+Training an unconditional diffusion model can help ControlNet converge faster and achieve better results. You can use the original script from the official [Diffuers]( https://github.com/huggingface/diffusers/tree/main/examples/text_to_image). And then use the following dataset by setting `dataset_name`: [ShuaKang/calvin_d](https://huggingface.co/datasets/ShuaKang/calvin_d).
+
 
 ## Bibtex
 
