@@ -129,7 +129,6 @@ class ControlNetModelTakSIE(ModelMixin, ConfigMixin):
         class_embed_type = "timestep"
         self.if_rnn = if_rnn
         self.output_or_hidden = "hidden" # "output" or "hidden"
-        print(f"IF CLASS_EMBEDDINGS_CONCAT : {class_embeddings_concat}")
         super().__init__()
         self.config.class_embeddings_concat = class_embeddings_concat
         

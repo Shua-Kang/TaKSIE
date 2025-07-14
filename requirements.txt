@@ -1,7 +1,8 @@
 accelerate==1.2.0
 diffusers==0.17.0
-numpy==2.2.0
+numpy==1.26
 Pillow==11.0.0
 torch==1.13.1
 transformers==4.47.0
 statsmodels==0.14.4
+huggingface_hub==0.25.2
